@@ -24,7 +24,7 @@
               },
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "baseHref": "/Destionations/",
+            "baseHref": "/Destinations/",
             "polyfills": [
               "zone.js"
             ],
