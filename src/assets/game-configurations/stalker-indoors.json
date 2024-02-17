@@ -1,0 +1,98 @@
+{
+    "name": "Stalker",
+    "version": 0,
+    "gameTag": "It Is Looking For You",
+    "areas": [
+        {
+            "id": 0,
+            "name": "Upstairs"
+        },
+        {
+            "id": 1,
+            "name": "Ground Floor"
+        },
+        {
+            "id": 2,
+            "name": "Basement"
+        }
+    ],
+    "adjacentAreas": [
+        {
+            "id": 0,
+            "areaId": 0,
+            "adjacentAreaId": 1
+        },
+        {
+            "id": 1,
+            "areaId": 1,
+            "adjacentAreaId": 0
+        },
+        {
+            "id": 2,
+            "areaId": 1,
+            "adjacentAreaId": 2
+        },
+        {
+            "id": 3,
+            "areaId": 2,
+            "adjacentAreaId": 1
+        }
+    ],
+    "destinations": [
+        {
+            "id": 0,
+            "areaId": 0,
+            "name": "Bedroom"
+        },
+        {
+            "id": 1,
+            "areaId": 0,
+            "name": "Bathroom"
+        },
+        {
+            "id": 2,
+            "areaId": 1,
+            "name": "Front Bedroom"
+        },
+        {
+            "id": 3,
+            "areaId": 1,
+            "name": "Common Bathroom"
+        },
+        {
+            "id": 4,
+            "areaId": 1,
+            "name": "Kitchen"
+        },
+        {
+            "id": 5,
+            "areaId": 1,
+            "name": "Living Room"
+        },
+        {
+            "id": 6,
+            "areaId": 1,
+            "name": "Master Bedroom"
+        },
+        {
+            "id": 7,
+            "areaId": 1,
+            "name": "Master Bathroom"
+        },
+        {
+            "id": 8,
+            "areaId": 2,
+            "name": "Kid's Room"
+        },
+        {
+            "id": 9,
+            "areaId": 2,
+            "name": "Bedroom"
+        },
+        {
+            "id": 10,
+            "areaId": 2,
+            "name": "Bathroom"
+        }
+    ]
+}
