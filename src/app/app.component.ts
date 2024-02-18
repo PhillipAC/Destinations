@@ -1,18 +1,15 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GameConfig } from './models/configurations/game-config';
 import { GameRoute } from './models/game-route';
 import { GameRouteService } from './services/game-route.service';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Location } from './models/location';
+import { NgFor, NgIf } from '@angular/common';
+import { GameConfigService } from './services/game-config.service';
+import { DefaultConfigOption } from './enumerations/default-config-option';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,
-            HttpClientModule,
-            CommonModule,
             NgFor,
             NgIf],
   templateUrl: './app.component.html',
@@ -24,19 +21,15 @@ export class AppComponent implements OnInit {
   tag: string = 'Places to go to';
   route: GameRoute | undefined;
 
-  constructor(private _httpClient: HttpClient, private _gameRouteService: GameRouteService){}
+  constructor(private _gameConfigService: GameConfigService, 
+    private _gameRouteService: GameRouteService){}
 
   ngOnInit(){
-    this._httpClient.get<GameConfig>("assets/game-configurations/stalker-indoors.json")
-      .subscribe((config) => {
-        config.locations.map<Location>(l => {
-          l.area = config.areas.find(a => a.id == l.areaId);
-          return l;
-        });
-        this.title = config.name;
-        this.tag = config.gameTag;
-        this._gameRouteService.loadConfig(config);
-        this.route = this._gameRouteService.generateRoute(3);
+    this._gameConfigService.loadDefault(DefaultConfigOption.Stalker)
+      .subscribe(_ => {
+        this.title = this._gameConfigService.getName;
+        this.tag = this._gameConfigService.getTag;
+        this.route = this._gameRouteService.generateRoute(1);
       });
   }
 }

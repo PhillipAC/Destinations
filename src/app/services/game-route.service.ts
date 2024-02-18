@@ -4,27 +4,18 @@ import { Area } from '../models/area';
 import { GameRoute } from '../models/game-route';
 import { Location } from '../models/location';
 import { AdjacentArea } from '../models/adjacent-area';
+import { GameConfigService } from './game-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameRouteService {
 
-  private _config: GameConfig | null = null;
-  private _areas: Area[] | null = null;
-  private _locations: Location[] | null = null;
-  private _adjacentAreas: AdjacentArea[] | null = null;
-  
-
-  constructor() { }
-
-  loadConfig(config: GameConfig){
-    this._config = config;
-  }
+  constructor(private _gameConfigService: GameConfigService) { }
 
 
   generateRoute(steps: number): GameRoute{
-    if(this._config == null){
+    if(!this._gameConfigService.isLoaded){
       throw new Error("No configuration has been loaded");
     }
     else{
@@ -34,11 +25,11 @@ export class GameRouteService {
       let areas: Area[] = [];
 
       //Determine the sequence of Areas to move between
-      for(var i = 0; i < steps; i++){
+      for(var i = 0; i < steps+2; i++){
         //If there are no areas to select from reset the list of areas
         if(areas.length == 0){
           //Create a copy of the areas so we can manipulate it without editing the source
-          areas = Array.from(this._config.areas);
+          areas = Array.from(this._gameConfigService.getAreas);
         }
         //Make an array to store areas that are options to choose from
         let optionalAreas: Area[] = [];
@@ -51,10 +42,9 @@ export class GameRouteService {
           //Determine what the last area to visit is
           let lastArea: Area = targetAreas[targetAreas.length -1];
           //Find all the IDs of areas that are adjacent to the last area visited
-          let adjacentAreaIds = this._config.adjacentAreas
+          let adjacentAreaIds = this._gameConfigService.getAdjacentAreas
             .filter(aa => aa.areaId == lastArea.id)
             .map(aa => aa.adjacentAreaId);
-          console.log(adjacentAreaIds);
           //Find all areas whose IDs do not exist in the list of adjacent areas
           optionalAreas = areas
             .filter(a => adjacentAreaIds.findIndex(id => id == a.id) == -1 && a.id != lastArea.id);
@@ -77,7 +67,7 @@ export class GameRouteService {
       //Loop over every area in order
       for(var i = 0; i < targetAreas.length; i++){
         //Find all locations in that area
-        let optionalLocations = this._config.locations.filter(r => r.areaId == targetAreas[i].id);
+        let optionalLocations = this._gameConfigService.getLocations.filter(l => l.areaId == targetAreas[i].id);
         //Select a random location
         targetLocations.push(this.selectRandomElement<Location>(optionalLocations));
       }
