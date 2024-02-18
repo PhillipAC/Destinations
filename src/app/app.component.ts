@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   constructor(private _httpClient: HttpClient, private _gameRouteService: GameRouteService){}
 
   ngOnInit(){
-    this._httpClient.get<GameConfig>("../assets/game-configurations/stalker-indoors.json")
+    this._httpClient.get<GameConfig>("assets/game-configurations/stalker-indoors.json")
       .subscribe((config) => {
         config.locations.map<Location>(l => {
           l.area = config.areas.find(a => a.id == l.areaId);
