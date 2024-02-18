@@ -5,16 +5,25 @@ import { GameRoute } from '../models/game-route';
 import { Location } from '../models/location';
 import { AdjacentArea } from '../models/adjacent-area';
 import { GameConfigService } from './game-config.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+//Service used for generate routes based on loaded configuration
 export class GameRouteService {
+
+  private newRouteCreatedObserver = new Subject<GameRoute>();
+
+  //Published any time a new route is generated
+  public newRouteCreated$ = this.newRouteCreatedObserver.asObservable();
 
   constructor(private _gameConfigService: GameConfigService) { }
 
-
-  generateRoute(steps: number): GameRoute{
+  // Creates a new route based on the loaded configuration
+  // param(steps): the number of destinations between the start and end location
+  public generateRoute(steps: number): GameRoute{
+    //If no configuration is loaded throw an error
     if(!this._gameConfigService.isLoaded){
       throw new Error("No configuration has been loaded");
     }
@@ -82,11 +91,20 @@ export class GameRouteService {
         throw Error("Issue with creating route occured");
       }
 
+      //Bundle the new route
+      let gameRoute = new GameRoute(start, targetLocations, stop);
+
+      //Publish the new route
+      this.newRouteCreatedObserver.next(gameRoute);
+
       //Return the route
       return new GameRoute(start, targetLocations, stop);
     }
   }
 
+  //Selects a random element from an array
+  //param(T): The type of elements in the array
+  //param(array): The array to choose a random element of
   private selectRandomElement<T>(array: T[]): T{
     let index = Math.floor(Math.random()*array.length);
     return array[index];

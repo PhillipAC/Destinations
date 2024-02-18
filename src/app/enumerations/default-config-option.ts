@@ -1,3 +1,4 @@
 export enum DefaultConfigOption {
-    Stalker = 0
+    Stalker = 0,
+    Tag = 1
 }

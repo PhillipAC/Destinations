@@ -1,0 +1,63 @@
+{
+    "name": "Tag!",
+    "version": 0,
+    "gameTag": "Run, Run As Fast As You Can",
+    "startNomenclature": "Begin",
+    "stepNomenclature": "Mission",
+    "endNomenclature": "End",
+    "areas": [
+        {
+            "id": 0,
+            "name": "Playground"
+        }
+    ],
+    "adjacentAreas": [
+    ],
+    "locations": [
+        {
+            "id": 0,
+            "areaId": 0,
+            "name": "Large Tree"
+        },
+        {
+            "id": 1,
+            "areaId": 0,
+            "name": "Picnic Table"
+        },
+        {
+            "id": 2,
+            "areaId": 0,
+            "name": "Small Slide"
+        },
+        {
+            "id": 3,
+            "areaId": 0,
+            "name": "Large Slide"
+        },
+        {
+            "id": 4,
+            "areaId": 0,
+            "name": "Monkey Bars"
+        },
+        {
+            "id": 5,
+            "areaId": 0,
+            "name": "Geodome"
+        },
+        {
+            "id": 6,
+            "areaId": 0,
+            "name": "Swings"
+        },
+        {
+            "id": 7,
+            "areaId": 0,
+            "name": "Seesaws"
+        },
+        {
+            "id": 8,
+            "areaId": 0,
+            "name": "Basketball Court"
+        }
+    ]
+}

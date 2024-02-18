@@ -4,6 +4,9 @@ import { Location } from "../location";
 
 export class GameConfig {
     public name: string = "";
+    public startNomenclature: string = "";
+    public endNomenclature: string = "";
+    public stepNomenclature: string = "";
     public version: number = 0;
     public gameTag: string = "";
     public areas: Area[] = [];
