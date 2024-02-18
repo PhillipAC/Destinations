@@ -1,2 +1,21 @@
-<h1>{{title}}</h1>
-<h2>{{tag}}</h2>
+<div class="header-content">
+    <h1>{{title}}</h1>
+    <div class="sub-text">{{tag}}</div>  
+</div>
+<div id="steps" *ngIf="route != null">
+    <div class="step wake">
+        <div class="top wake-top">Wake Up</div>
+        <div class="bottom area" id="wake-area">{{route.startLocation.area?.name}}</div>
+        <div class="bottom room" id="wake-room">{{route.startLocation.name}}</div>
+    </div>
+    <div *ngFor="let step of route.steps" class="step collect">
+        <div class="top collect-top">Collect</div>
+        <div class="bottom area" id="collect-area">{{step.area?.name}}</div>
+        <div class="bottom room" id="collect-room">{{step.name}}</div>
+    </div>
+    <div class="step escape">
+        <div class="top escape-top">Escape</div>
+        <div class="bottom area" id="escape-area">{{route.finalDestination.area?.name}}</div>
+        <div class="bottom room" id="escape-room">{{route.finalDestination.name}}</div>
+    </div>
+</div>

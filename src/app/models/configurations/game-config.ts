@@ -1,6 +1,6 @@
 import { AdjacentArea } from "../adjacent-area";
 import { Area } from "../area";
-import { Destination } from "../destination";
+import { Location } from "../location";
 
 export class GameConfig {
     public name: string = "";
@@ -8,5 +8,5 @@ export class GameConfig {
     public gameTag: string = "";
     public areas: Area[] = [];
     public adjacentAreas: AdjacentArea[] = [];
-    public destinations: Destination[] = [];
+    public locations: Location[] = [];
 }
