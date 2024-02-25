@@ -120,4 +120,12 @@ export class GameConfigService {
             return of(true);
           }));
   }
+
+  public getLocationsByAreaId(areaId: number): Location[] {
+    return this.getLocations.filter(l => l.areaId == areaId);
+  }
+
+  public getAdjacentAreasByAreaId(areaId: number): AdjacentArea[] {
+    return this.getAdjacentAreas.filter(l => l.areaId == areaId);
+  }
 }

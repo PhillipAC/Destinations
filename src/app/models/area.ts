@@ -1,3 +1,8 @@
-export class Area {
-    constructor(public id: number, public name: string){}
+import { BaseId } from "./base/base-id";
+
+export class Area extends BaseId{
+    constructor(
+        id: number, 
+        public name: string){
+            super(id);}
 }

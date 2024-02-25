@@ -1,0 +1,35 @@
+<div class="editor" style="border-color: white; border-style: solid; color: white">
+    <div class="label">Game: </div>
+    <input class="input-field" type="text" [(ngModel)]="gameName"/>
+    <div></div>
+    <div class="label">Tag: </div>
+    <input class="input-field" type="text" [(ngModel)]="gameTag"/>
+    <div></div>
+    <div class="label">Areas</div>
+    <div></div>
+    <button class="add-button" (click)="newArea()">+</button>
+    <div *ngFor="let area of areas; index as i" class="area">
+        <div class="header">
+            <div class="label">Name: </div>
+            <input type="text" [(ngModel)]="area.name"/>
+            <button class="remove-button" (click)="removeArea(area.id)">X</button>
+        </div>
+        <div class="locations">
+            <div *ngFor="let location of area.locations; index as j"
+                class="location">
+                <div class="label">Location: </div>
+                <input type="text" [(ngModel)]="location.name"/>
+                <button class="remove-button" (click)="removeLocation(location.id)">X</button>
+            </div>
+            <button class="add-button" (click)="newLocation(area.id)">New Location</button>
+        </div>
+        <div class="adjacent-areas">
+            <div *ngFor="let adjacentArea of areas; index as j" class="adjacent-area">
+                <input type="checkbox" [checked]="arrayHelper.containsElement(area.adjacentAreas, adjacentArea.id)"
+                    (click)="handleAdjacentAreaToggle($event, area.id, adjacentArea.id)"/>
+                <div>{{adjacentArea.name}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<button (click)="post()">Post</button>"

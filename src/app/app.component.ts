@@ -5,7 +5,8 @@ import { GameRouteService } from './services/game-route.service';
 import { NgFor, NgIf } from '@angular/common';
 import { GameConfigService } from './services/game-config.service';
 import { DefaultConfigOption } from './enumerations/default-config-option';
-import { OptionsComponent } from './options/options.component';
+import { OptionsComponent } from './components/options/options.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { OptionsComponent } from './options/options.component';
   imports: [RouterOutlet,
             NgFor,
             NgIf,
-            OptionsComponent],
+            OptionsComponent,
+            EditorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

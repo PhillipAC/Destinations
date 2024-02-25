@@ -77,3 +77,55 @@ body {
 .room{
     font-style: italic;
 }
+
+.editor{
+    display: grid;
+    grid-template-columns: 75px auto 30px;
+    gap: 5px 5px;
+}
+
+.area{
+    grid-column: 1 / 4;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border: 1px white solid;
+    margin: 5px;
+    padding: 5px;
+
+    .header{
+        grid-column: 1/3;
+        display: grid;
+        grid-template-columns: 80px auto 25px;
+    }
+
+    .locations{
+        border: 1px white solid;
+        padding: 5px;
+        
+        .location{
+            display: grid;
+            grid-template-columns: 80px auto 25px;
+        }    
+    }
+
+    
+    .adjacent-areas{
+        border: 1px white solid;
+        padding: 5px;
+
+        .adjacent-area{
+            display: grid;
+            grid-template-columns: 25px auto;
+        }
+    }
+}
+
+.remove-button{
+    color: white;
+    background-color: red;
+}
+
+.add-button{
+    color: white;
+    background-color: rgb(14, 14, 206);
+}

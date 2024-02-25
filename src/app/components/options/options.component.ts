@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DefaultConfigOption } from '../enumerations/default-config-option';
-import { GameConfigService } from '../services/game-config.service';
-import { GameRouteService } from '../services/game-route.service';
+import { DefaultConfigOption } from '../../enumerations/default-config-option';
+import { GameConfigService } from '../../services/game-config.service';
+import { GameRouteService } from '../../services/game-route.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
