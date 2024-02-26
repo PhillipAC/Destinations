@@ -86,6 +86,7 @@ export class EditorComponent implements OnInit{
       let sJson: any = fileReader.result;
       if(typeof(sJson) == 'string')
         this._editorService.loadFromJson(sJson);
+        this.save();
     }
     fileReader.readAsText(this._file);
   }
