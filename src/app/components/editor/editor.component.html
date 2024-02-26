@@ -1,9 +1,18 @@
 <div class="editor" style="border-color: white; border-style: solid; color: white">
     <div class="label">Game: </div>
-    <input class="input-field" type="text" [(ngModel)]="gameName"/>
+    <input class="input-field" type="text" [(ngModel)]="gameInfo.name"/>
     <div></div>
     <div class="label">Tag: </div>
-    <input class="input-field" type="text" [(ngModel)]="gameTag"/>
+    <input class="input-field" type="text" [(ngModel)]="gameInfo.gameTag"/>
+    <div></div>
+    <div class="label">Start: </div>
+    <input class="input-field" type="text" [(ngModel)]="gameInfo.startNomenclature"/>
+    <div></div>
+    <div class="label">Steps: </div>
+    <input class="input-field" type="text" [(ngModel)]="gameInfo.stepNomenclature"/>
+    <div></div>
+    <div class="label">End: </div>
+    <input class="input-field" type="text" [(ngModel)]="gameInfo.endNomenclature"/>
     <div></div>
     <div class="label">Areas</div>
     <div></div>
@@ -32,4 +41,4 @@
         </div>
     </div>
 </div>
-<button (click)="post()">Post</button>"
+<button (click)="save()">Save</button>"

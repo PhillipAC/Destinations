@@ -6,6 +6,8 @@ import { Location } from '../models/location';
 import { Area } from '../models/area';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, of, switchMap } from 'rxjs';
+import { AreaEditor } from '../models/editor/area-editor';
+import { GameInfo } from '../models/game-info';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,16 @@ export class GameConfigService {
   private configLoadedObservable = new Subject<GameConfig>();
   public configLoaded$ = this.configLoadedObservable.asObservable();
 
+  private readonly _currentConfigVersion: number = 0;
+  
   private _config: GameConfig | null = null;
+  
+  public get getGameInfo(): GameInfo{
+    if(this._config == null){
+      return new GameInfo();
+    }
+    return this._config.gameInfo;
+  }
 
   //Returns all adjancent areas
   public get getAdjacentAreas(): AdjacentArea[]{
@@ -47,7 +58,7 @@ export class GameConfigService {
     if(this._config == null){
       return "";
     }
-    return this._config.name;
+    return this._config.gameInfo.name;
   }
 
   //Returns the tag of the configuration
@@ -55,7 +66,7 @@ export class GameConfigService {
     if(this._config == null){
       return "";
     }
-    return this._config.gameTag;
+    return this._config.gameInfo.gameTag;
   }
 
   //Gets the nomenclature for the starting location
@@ -63,7 +74,7 @@ export class GameConfigService {
     if(this._config == null){
       return "";
     }
-    return this._config.startNomenclature;
+    return this._config.gameInfo.startNomenclature;
   }
 
   //Gets the nomenclature for the intermediate locations
@@ -71,7 +82,7 @@ export class GameConfigService {
     if(this._config == null){
       return "";
     }
-    return this._config.stepNomenclature;
+    return this._config.gameInfo.stepNomenclature;
   }
 
   //Gets the nomenclature for the last location
@@ -79,7 +90,7 @@ export class GameConfigService {
     if(this._config == null){
       return "";
     }
-    return this._config.endNomenclature;
+    return this._config.gameInfo.endNomenclature;
   }
 
   //Returns if the configuration is loaded
@@ -105,11 +116,6 @@ export class GameConfigService {
     //Perform request the configuration
     return this._httpClient.get<GameConfig>(path)
           .pipe(switchMap((config) => {
-            //Load area info for each location
-            config.locations.map<Location>(l => {
-              l.area = config.areas.find(a => a.id == l.areaId);
-              return l;
-            });
             //Set the configuration
             this._config = config;
             //Set that a configuration has been loaded to true
@@ -119,6 +125,48 @@ export class GameConfigService {
             //return that something has been loaded
             return of(true);
           }));
+  }
+
+  public saveFromEditor(areaEditors: AreaEditor[], gameInfo: GameInfo){
+    let areas: Area[] = [];
+    let locations: Location[] = [];
+    let adjacentAreas: AdjacentArea[] = [];
+    let version: number = this._currentConfigVersion;
+
+    let areaIdMapping: [number, number][] = [];
+    let locationIdMapping: [number, number][] = [];
+    
+    let j: number = 0;
+    for(var i = 0; i < areaEditors.length; i++){
+      areaIdMapping.push([areaEditors[i].id, i]);
+      areaEditors[i].locations.forEach(le => {
+        locationIdMapping.push([le.id, j]);
+        j++;
+      })
+    }
+
+    j = 0;
+    areaEditors.forEach(ae => {
+      areas.push(new Area(areaIdMapping[ae.id][1], ae.name));
+      ae.locations.forEach(le => {
+        locations.push(new Location(locationIdMapping[le.id][1], areaIdMapping[ae.id][1], le.name));
+      });
+      ae.adjacentAreas.forEach(aa => {
+        adjacentAreas.push(new AdjacentArea(j, areaIdMapping[ae.id][1], areaIdMapping[aa][1]));
+        j++;
+      });
+    })
+
+    let gameConfig = new GameConfig;
+    gameConfig.areas = areas;
+    gameConfig.locations = locations;
+    gameConfig.adjacentAreas = adjacentAreas;
+    gameConfig.gameInfo = gameInfo;
+    gameConfig.version = version;
+
+    this._config = gameConfig;
+    this.configLoadedObservable.next(gameConfig);
+    console.log(gameConfig);
   }
 
   public getLocationsByAreaId(areaId: number): Location[] {

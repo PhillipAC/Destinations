@@ -4,6 +4,7 @@ import { AreaEditor } from '../models/editor/area-editor';
 import { LocationEditor } from '../models/editor/location-editor';
 import { Observable, map, of } from 'rxjs';
 import { ArrayHelper } from '../helpers/array-helper';
+import { GameInfo } from '../models/game-info';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { ArrayHelper } from '../helpers/array-helper';
 export class EditorService {
 
   public areas: AreaEditor[] = [];
+  public gameInfo: GameInfo = new GameInfo();
 
   constructor(private _configService: GameConfigService) { 
   }
@@ -23,7 +25,6 @@ export class EditorService {
     }
     return this._configService.configLoaded$.pipe<AreaEditor[]>(map(_ => 
       {
-        console.log("test");
         this.loadEditorService();
         return this.areas;
       }));
@@ -69,6 +70,10 @@ export class EditorService {
     return false;
   }
 
+  public saveToConfig(): void{
+    this._configService.saveFromEditor(this.areas, this.gameInfo);
+  }
+
   private loadEditorService(): void{
     let areaEditors: AreaEditor[] = [];
     let areas = this._configService.getAreas;
@@ -85,6 +90,6 @@ export class EditorService {
       areaEditors.push(new AreaEditor(area.id, area.name, locationEditors, adjacentAreas));
     }
     this.areas = areaEditors;
-    console.log(areas);
+    this.gameInfo = this._configService.getGameInfo;
   }
 }

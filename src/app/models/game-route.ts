@@ -1,6 +1,6 @@
-import {Location} from '../models/location';
+import { Destination } from './destination';
 
 export class GameRoute {
-    constructor(public startLocation: Location, public steps: Location[], 
-        public finalDestination: Location){}
+    constructor(public startLocation: Destination, public steps: Destination[], 
+        public finalDestination: Destination){}
 }

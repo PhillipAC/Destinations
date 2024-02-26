@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { GameConfigService } from '../../services/game-config.service';
 import { EditorService } from '../../services/editor.service';
 import { ArrayHelper } from '../../helpers/array-helper';
+import { GameInfo } from '../../models/game-info';
 
 @Component({
   selector: 'app-editor',
@@ -20,8 +21,10 @@ import { ArrayHelper } from '../../helpers/array-helper';
 })
 export class EditorComponent implements OnInit{
 
-  public gameName: string = "New Game";
-  public gameTag: string = "Tag for the game";
+  public get gameInfo(): GameInfo{
+    return this._editorService.gameInfo
+  }
+
   public get areas(): AreaEditor[]{
     return this._editorService.areas
   }
@@ -59,7 +62,7 @@ export class EditorComponent implements OnInit{
     this._editorService.newArea();
   }
 
-  public post(){
-    console.log(this.areas);
+  public save(){
+    this._editorService.saveToConfig();
   }
 }

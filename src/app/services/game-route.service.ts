@@ -6,6 +6,7 @@ import { Location } from '../models/location';
 import { AdjacentArea } from '../models/adjacent-area';
 import { GameConfigService } from './game-config.service';
 import { Subject } from 'rxjs';
+import { Destination } from '../models/destination';
 
 @Injectable({
   providedIn: 'root'
@@ -69,22 +70,23 @@ export class GameRouteService {
         //Add the area to the areas to visit
         targetAreas.push(targetArea);
       }
-
       //Create an array to store the locations to visit
-      let targetLocations = [];
+      let destionations: Destination[] = [];
 
       //Loop over every area in order
       for(var i = 0; i < targetAreas.length; i++){
         //Find all locations in that area
         let optionalLocations = this._gameConfigService.getLocations.filter(l => l.areaId == targetAreas[i].id);
         //Select a random location
-        targetLocations.push(this.selectRandomElement<Location>(optionalLocations));
+        let location = this.selectRandomElement<Location>(optionalLocations);
+        let area = this._gameConfigService.getAreas.find(a => a.id == location.areaId);
+        destionations.push(new Destination(area?.name ?? "", location.name));
       }
 
       //Get the first location for the starting area
-      let start = targetLocations.shift();
+      let start = destionations.shift();
       //Get the last location for the ending area
-      let stop = targetLocations.pop();
+      let stop = destionations.pop();
 
       //Validate that you at least had two locations
       if(start == undefined || stop == undefined){
@@ -92,13 +94,13 @@ export class GameRouteService {
       }
 
       //Bundle the new route
-      let gameRoute = new GameRoute(start, targetLocations, stop);
+      let gameRoute = new GameRoute(start, destionations, stop);
 
       //Publish the new route
       this.newRouteCreatedObserver.next(gameRoute);
 
       //Return the route
-      return new GameRoute(start, targetLocations, stop);
+      return gameRoute;
     }
   }
 
