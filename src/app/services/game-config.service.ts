@@ -157,12 +157,16 @@ export class GameConfigService {
 
     j = 0;
     areaEditors.forEach(ae => {
-      areas.push(new Area(areaIdMapping[ae.id][1], ae.name));
+      let areaMapping = areaIdMapping.find(m => m[0] == ae.id);
+      if(areaMapping == undefined){
+        throw Error("Mapping was not found");
+      }
+      areas.push(new Area(areaMapping[1], ae.name));
       ae.locations.forEach(le => {
         let locationMapping = locationIdMapping.find(m => m[0] == le.id);
         let areaMapping = areaIdMapping.find(m => m[0] == ae.id);
         if(locationMapping == undefined || areaMapping == undefined){
-          throw Error("Mapping was not found")
+          throw Error("Mapping was not found");
         }
         locations.push(new Location(locationMapping[1], areaMapping[1], le.name));
       });

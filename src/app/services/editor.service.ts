@@ -18,7 +18,6 @@ export class EditorService {
   }
 
   public loadConfigFromService(): Observable<AreaEditor[]>{
-    console.log(this._configService.isLoaded);
     if(this._configService.isLoaded){
       this.loadEditorService();
       return of(this.areas);

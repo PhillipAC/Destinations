@@ -6,12 +6,7 @@ export class ArrayHelper {
         let indexes = array.map(e => e.id);
         let sortedIndexes = indexes.sort();
         let id = sortedIndexes.pop();
-    
-        console.log(array);
-        console.log(indexes);
-        console.log(sortedIndexes);
-        console.log(id);
-    
+
         let currentId = id ?? -1;
         return currentId + 1;
       }
