@@ -8,13 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, of, switchMap } from 'rxjs';
 import { AreaEditor } from '../models/editor/area-editor';
 import { GameInfo } from '../models/game-info';
+import { FileService } from './file.service';
 
 @Injectable({
   providedIn: 'root'
 })
 //Service used for getting info about the current configuration of the game
 export class GameConfigService {
-  
   private configLoadedObservable = new Subject<GameConfig>();
   public configLoaded$ = this.configLoadedObservable.asObservable();
 
@@ -96,7 +96,7 @@ export class GameConfigService {
   //Returns if the configuration is loaded
   public isLoaded: boolean = false;
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient, private _fileService: FileService) { }
 
   //Loads a new configuration into the system
   public loadDefault(option: DefaultConfigOption): Observable<boolean>{
@@ -127,6 +127,16 @@ export class GameConfigService {
           }));
   }
 
+  public loadFromJson(sJson: string): void {
+    let config: GameConfig = JSON.parse(sJson);
+    if(config != null)
+    {
+      this._config = config;
+      this.isLoaded = true;
+      this.configLoadedObservable.next(config);
+    }
+  }
+
   public saveFromEditor(areaEditors: AreaEditor[], gameInfo: GameInfo){
     let areas: Area[] = [];
     let locations: Location[] = [];
@@ -149,10 +159,20 @@ export class GameConfigService {
     areaEditors.forEach(ae => {
       areas.push(new Area(areaIdMapping[ae.id][1], ae.name));
       ae.locations.forEach(le => {
-        locations.push(new Location(locationIdMapping[le.id][1], areaIdMapping[ae.id][1], le.name));
+        let locationMapping = locationIdMapping.find(m => m[0] == le.id);
+        let areaMapping = areaIdMapping.find(m => m[0] == ae.id);
+        if(locationMapping == undefined || areaMapping == undefined){
+          throw Error("Mapping was not found")
+        }
+        locations.push(new Location(locationMapping[1], areaMapping[1], le.name));
       });
       ae.adjacentAreas.forEach(aa => {
-        adjacentAreas.push(new AdjacentArea(j, areaIdMapping[ae.id][1], areaIdMapping[aa][1]));
+        let adjacentMapping = locationIdMapping.find(m => m[0] == aa);
+        let areaMapping = areaIdMapping.find(m => m[0] == ae.id);
+        if(adjacentMapping == undefined || areaMapping == undefined){
+          throw Error("Mapping was not found")
+        }
+        adjacentAreas.push(new AdjacentArea(j, areaMapping[1], adjacentMapping[1]));
         j++;
       });
     })
@@ -166,7 +186,11 @@ export class GameConfigService {
 
     this._config = gameConfig;
     this.configLoadedObservable.next(gameConfig);
-    console.log(gameConfig);
+  }
+
+  public download(): void{
+    if(this._config != null)
+      this._fileService.downloadJson(this._config);
   }
 
   public getLocationsByAreaId(areaId: number): Location[] {

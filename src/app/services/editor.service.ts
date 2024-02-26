@@ -74,6 +74,14 @@ export class EditorService {
     this._configService.saveFromEditor(this.areas, this.gameInfo);
   }
 
+  public download(): void{
+    this._configService.download();
+  }
+
+  public loadFromJson(sJson: string) {
+    this._configService.loadFromJson(sJson);
+  }
+
   private loadEditorService(): void{
     let areaEditors: AreaEditor[] = [];
     let areas = this._configService.getAreas;

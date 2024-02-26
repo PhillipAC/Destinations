@@ -20,6 +20,7 @@ import { GameInfo } from '../../models/game-info';
   styleUrl: './editor.component.scss'
 })
 export class EditorComponent implements OnInit{
+  private _file: any = undefined;
 
   public get gameInfo(): GameInfo{
     return this._editorService.gameInfo
@@ -37,6 +38,10 @@ export class EditorComponent implements OnInit{
 
   public ngOnInit(): void {
     this._editorService.loadConfigFromService().subscribe();
+  }
+
+  public hasFile() {
+    return this._file != undefined;
   }
 
   public handleAdjacentAreaToggle(event: Event, areaId: number, adjacentAreaId: number): void{
@@ -64,5 +69,24 @@ export class EditorComponent implements OnInit{
 
   public save(){
     this._editorService.saveToConfig();
+  }
+
+  public saveAndDownload(){
+    this._editorService.saveToConfig();
+    this._editorService.download();
+  }
+
+  public fileChanged($event: any) {
+    this._file = $event.target.files[0]
+  }
+
+  public uploadConfig(){
+    let fileReader: FileReader = new FileReader();
+    fileReader.onload = (e) => {
+      let sJson: any = fileReader.result;
+      if(typeof(sJson) == 'string')
+        this._editorService.loadFromJson(sJson);
+    }
+    fileReader.readAsText(this._file);
   }
 }

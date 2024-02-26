@@ -41,4 +41,8 @@
         </div>
     </div>
 </div>
-<button (click)="save()">Save</button>"
+<button (click)="save()">Save</button>
+<button (click)="saveAndDownload()">Save & Download</button>
+<br>
+<input type='file' (change)="fileChanged($event)" style="background-color: white;">
+<button [disabled]="!hasFile()" (click)="uploadConfig()">Load Config</button>
