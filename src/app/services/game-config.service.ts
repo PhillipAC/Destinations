@@ -138,6 +138,7 @@ export class GameConfigService {
   }
 
   public saveFromEditor(areaEditors: AreaEditor[], gameInfo: GameInfo){
+    console.log(areaEditors);
     let areas: Area[] = [];
     let locations: Location[] = [];
     let adjacentAreas: AdjacentArea[] = [];
@@ -171,7 +172,7 @@ export class GameConfigService {
         locations.push(new Location(locationMapping[1], areaMapping[1], le.name));
       });
       ae.adjacentAreas.forEach(aa => {
-        let adjacentMapping = locationIdMapping.find(m => m[0] == aa);
+        let adjacentMapping = areaIdMapping.find(m => m[0] == aa);
         let areaMapping = areaIdMapping.find(m => m[0] == ae.id);
         if(adjacentMapping == undefined || areaMapping == undefined){
           throw Error("Mapping was not found")
