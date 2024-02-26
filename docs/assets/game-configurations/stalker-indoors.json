@@ -1,10 +1,12 @@
 {
-    "name": "Stalker",
     "version": 0,
-    "gameTag": "It Is Looking For You",
-    "startNomenclature": "Wake Up",
-    "stepNomenclature": "Collect",
-    "endNomenclature": "Escape",
+    "gameInfo": {
+        "name": "Stalker",
+        "gameTag": "It Is Looking For You",
+        "startNomenclature": "Wake Up",
+        "stepNomenclature": "Collect",
+        "endNomenclature": "Escape"
+    },
     "areas": [
         {
             "id": 0,

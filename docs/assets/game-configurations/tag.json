@@ -1,10 +1,12 @@
 {
-    "name": "Tag!",
     "version": 0,
-    "gameTag": "Run, Run As Fast As You Can",
-    "startNomenclature": "Begin",
-    "stepNomenclature": "Mission",
-    "endNomenclature": "End",
+    "gameInfo": {
+        "name": "Tag!",
+        "gameTag": "Run, Run As Fast As You Can",
+        "startNomenclature": "Begin",
+        "stepNomenclature": "Mission",
+        "endNomenclature": "End"
+    },
     "areas": [
         {
             "id": 0,
