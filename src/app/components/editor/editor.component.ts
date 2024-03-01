@@ -22,28 +22,35 @@ import { GameInfo } from '../../models/game-info';
 export class EditorComponent implements OnInit{
   private _file: any = undefined;
 
+  //Return the GmaeInfo from the Editor Service
   public get gameInfo(): GameInfo{
     return this._editorService.gameInfo
   }
 
+  //Returns the AreaEditors from the Editor Service
   public get areas(): AreaEditor[]{
     return this._editorService.areas
   }
 
+  //Makes the ArrayHelper public for the UI
   public get arrayHelper(): typeof ArrayHelper {
     return ArrayHelper;
   }
 
+  //Loads services need for component
   constructor(private _editorService: EditorService){}
 
+  //Requests that the current config is loaded
   public ngOnInit(): void {
     this._editorService.loadConfigFromService().subscribe();
   }
 
+  //Returns if a file has been selected
   public hasFile() {
     return this._file != undefined;
   }
 
+  //Removes or add an adjacent based on the current state of it
   public handleAdjacentAreaToggle(event: Event, areaId: number, adjacentAreaId: number): void{
     let removed = this._editorService.removeAdjacentArea(areaId, adjacentAreaId);
     if(!removed){
@@ -51,36 +58,43 @@ export class EditorComponent implements OnInit{
     }
   }
 
+  //Adds a new location to an area
   public newLocation(areaId: number) {
     this._editorService.newLocation(areaId);
   }
 
+  //Removes a location from an area
   public removeLocation(locationId: number) {
     this._editorService.removeLocation(locationId);
   }
 
+  //Removes an area
   public removeArea(areaId: number) {
     this._editorService.removeArea(areaId);
   }
 
+  //Adds a new area
   public newArea() {
     this._editorService.newArea();
   }
 
+  //Saves the current configuration
   public save(){
     this._editorService.saveToConfig();
   }
 
+  //Saves the current configuration and downloads a file version
   public saveAndDownload(){
     this._editorService.saveToConfig();
     this._editorService.download();
   }
 
-  public fileChanged($event: any) {
+  //Fired when the file selected changes
+  public fileChanged($event: any): void {
     this._file = $event.target.files[0]
   }
 
-  public uploadConfig(){
+  public uploadConfig(): void{
     let fileReader: FileReader = new FileReader();
     fileReader.onload = (e) => {
       let sJson: any = fileReader.result;
