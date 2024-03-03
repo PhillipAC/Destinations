@@ -61,6 +61,14 @@ export class GameConfigService {
     return this._config.gameInfo.name;
   }
 
+  //Returns if the configuration is a cycle
+  public get getIsCycle(): boolean{
+    if(this._config == null){
+      return false;
+    }
+    return this._config.gameInfo.isCycle;
+  }
+
   //Returns the tag of the configuration
   public get getTag(): string{
     if(this._config == null){
@@ -193,6 +201,7 @@ export class GameConfigService {
     gameConfig.version = version;
 
     this._config = gameConfig;
+    console.log(gameConfig);
     this.configLoadedObservable.next(gameConfig);
   }
 

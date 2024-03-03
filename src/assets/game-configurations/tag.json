@@ -5,7 +5,8 @@
         "gameTag": "Run, Run As Fast As You Can",
         "startNomenclature": "Begin",
         "stepNomenclature": "Mission",
-        "endNomenclature": "End"
+        "endNomenclature": "End",
+        "isCycle": "true"
     },
     "areas": [
         {

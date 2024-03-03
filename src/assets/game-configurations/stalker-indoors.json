@@ -5,7 +5,8 @@
         "gameTag": "It Is Looking For You",
         "startNomenclature": "Wake Up",
         "stepNomenclature": "Collect",
-        "endNomenclature": "Escape"
+        "endNomenclature": "Escape",
+        "isCycle": false
     },
     "areas": [
         {

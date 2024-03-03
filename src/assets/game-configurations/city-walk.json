@@ -4,7 +4,8 @@
 		"gameTag":"Take A Relaxing Stroll",
 		"startNomenclature":"Start",
 		"stepNomenclature":"Stop",
-		"endNomenclature":"Finish"},
+		"endNomenclature":"Finish",
+		"isCycle":true},
 	"version":0,
 	"areas":[
 		{"id":0,"name":"Downtown Square"},

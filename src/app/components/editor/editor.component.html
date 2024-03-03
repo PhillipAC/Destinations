@@ -15,6 +15,10 @@
     <div class="label">End: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.endNomenclature"/>
     <div></div>
+    <input type="checkbox" [checked]="gameInfo.isCycle"
+    (change)="gameInfo.isCycle= !gameInfo.isCycle"/>
+    <div class="label">Cycle Generation</div>
+    <div></div>
     <div class="label">Areas:</div>
     <div></div>
     <button class="btn btn-add" (click)="newArea()">+</button>

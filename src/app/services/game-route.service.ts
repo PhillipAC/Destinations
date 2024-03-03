@@ -43,42 +43,64 @@ export class GameRouteService {
         }
         //Make an array to store areas that are options to choose from
         let optionalAreas: Area[] = [];
-        //If this is the first area let any area be an option for starting
-        //Else determine what are valid areas to choose between
-        if(targetAreas.length == 0){
-          optionalAreas = areas;
+        //If this is the last destination and is a cycle then select the first area
+        if(this._gameConfigService.getIsCycle && i == steps+1)
+        {
+          //Add the first area for the cycle
+          targetAreas.push(targetAreas[0]);
         }
         else{
-          //Determine what the last area to visit is
-          let lastArea: Area = targetAreas[targetAreas.length -1];
-          //Find all the IDs of areas that are adjacent to the last area visited
-          let adjacentAreaIds = this._gameConfigService.getAdjacentAreas
-            .filter(aa => aa.areaId == lastArea.id)
-            .map(aa => aa.adjacentAreaId);
-          //Find all areas whose IDs do not exist in the list of adjacent areas
-          optionalAreas = areas
-            .filter(a => adjacentAreaIds.findIndex(id => id == a.id) == -1 && a.id != lastArea.id);
-          //If there are no valid options chooose from all areas that have not been chosen
-          if(optionalAreas.length == 0){
-              optionalAreas = areas;
+          //If this is the first area let any area be an option for starting
+          //Else determine what are valid areas to choose between
+          if(targetAreas.length == 0){
+            optionalAreas = areas;
           }
+          else{
+            //Determine what the last area to visit is
+            let lastArea: Area = targetAreas[targetAreas.length -1];
+            //Find all the IDs of areas that are adjacent to the last area visited
+            let adjacentAreaIds = this._gameConfigService.getAdjacentAreas
+              .filter(aa => aa.areaId == lastArea.id)
+              .map(aa => aa.adjacentAreaId);
+            //Find all areas whose IDs do not exist in the list of adjacent areas
+            optionalAreas = areas
+              .filter(a => adjacentAreaIds.findIndex(id => id == a.id) == -1 && a.id != lastArea.id);
+            //If there are no valid options chooose from all areas that have not been chosen
+            if(optionalAreas.length == 0){
+                optionalAreas = areas;
+            }
+          }
+          //Select a random area from the optional areas
+          let targetArea: Area = this.selectRandomElement<Area>(optionalAreas);
+          //Remove the selected area from the list of future available areas
+          areas = areas.filter(a => a.id != targetArea.id);
+          //Add the area to the areas to visit
+          targetAreas.push(targetArea);
         }
-        //Select a random area from the optional areas
-        let targetArea: Area = this.selectRandomElement<Area>(optionalAreas);
-        //Remove the selected area from the list of future available areas
-        areas = areas.filter(a => a.id != targetArea.id);
-        //Add the area to the areas to visit
-        targetAreas.push(targetArea);
       }
       //Create an array to store the locations to visit
       let destionations: Destination[] = [];
 
+      //Storage for first location
+      let firstLocation: Location = new Location(0, 0, "placeholder");
       //Loop over every area in order
       for(var i = 0; i < targetAreas.length; i++){
         //Find all locations in that area
         let optionalLocations = this._gameConfigService.getLocations.filter(l => l.areaId == targetAreas[i].id);
         //Select a random location
-        let location = this.selectRandomElement<Location>(optionalLocations);
+        let location: Location;
+        //If the last time and a cycle set the location to the first one else choose a random one
+        if(i == targetAreas.length - 1 && this._gameConfigService.getIsCycle){
+          location = firstLocation;
+        }
+        else{
+          location = this.selectRandomElement<Location>(optionalLocations);
+          //Store info about the location if it is the first round
+          if(i == 0){
+            firstLocation = location;
+          }
+        }
+        //Get the correct area
         let area = this._gameConfigService.getAreas.find(a => a.id == location.areaId);
         destionations.push(new Destination(area?.name ?? "", location.name));
       }
