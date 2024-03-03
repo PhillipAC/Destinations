@@ -1,0 +1,57 @@
+<h1>
+    Destionations
+</h1>
+<h2>
+    About
+</h2>
+<div>
+    Destinations is an application designed for setting up procedurally 
+    generated routes for use in live action games. A simple example would
+    be creating a route for people who are playing tag to go between
+    without being caught by the person who trying to tag them.
+</div>
+<h3>
+    Editor
+</h3>
+<div>
+    <p>
+        The Editor allows someone to modify the configuration for generating
+        the game. The area can be split into 4 general areas
+    </p>
+    <span class="label">Game Info: </span><br>
+    The Game Info section allows you to change nomenclature that is used for the game.<br><br>
+    <span class="label">Areas: </span><br>
+    Areas are large sections of the game that contain at least one location<br><br>
+    <span class="label">Locations: </span><br>
+    Locations are places that be selected as a destination
+    <span class="label">Adjacent Areas: </span><br>
+    Unless there are no other options, an area selected will not be adjacent to the previous
+    destination's area
+</div>
+<h3>
+    Example Configurations
+</h3>
+<div>
+    <p>
+        While Destinations is designed to allow anyone to create their own custom
+        configuration for a game, a set of pre-defined configurations can be loaded
+    </p>
+    <span class="label">Stalker: </span><br>
+    A surivial horror style game of hide and seak played a house with all the lights off. 
+    The hiders start in the first location. Then the seaker (Stalker) enters the game area. 
+    While the Stalker moves around the building the hiders sneak around and attempt to move
+    to their defined locations. They win if they can "escape" by getting to the last area.
+    <br><br>
+    <span class="label">Tag: </span>
+    A game of tag; however, the people who are running now have destinations to try and get to.
+    All runners start at the first location and then attempt to get to each destination.
+    If they can get to each destination they win the round. If the tagger tags them then they
+    lose the round.
+</div>
+<h2>
+    Credits
+</h2>
+<div>
+    Designed By: <a href="https://phillipac.github.io">Phillip Clontz</a>
+</div>
+<a [routerLink]="['']" class="btn">Back</a>
