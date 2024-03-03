@@ -1,0 +1,43 @@
+{
+	"gameInfo":{
+		"name":"City Walk",
+		"gameTag":"Take A Relaxing Stroll",
+		"startNomenclature":"Start",
+		"stepNomenclature":"Stop",
+		"endNomenclature":"Finish"},
+	"version":0,
+	"areas":[
+		{"id":0,"name":"Downtown Square"},
+		{"id":1,"name":"South & East of Downtown Square"},
+		{"id":2,"name":"North & West of Downtown Square"},
+		{"id":3,"name":"Big Spring Park"}],
+	"adjacentAreas":[
+		{"id":0,"areaId":0,"adjacentAreaId":1},
+		{"id":1,"areaId":0,"adjacentAreaId":2},
+		{"id":2,"areaId":0,"adjacentAreaId":3},
+		{"id":3,"areaId":1,"adjacentAreaId":0},
+		{"id":4,"areaId":2,"adjacentAreaId":0},
+		{"id":5,"areaId":3,"adjacentAreaId":0}],
+	"locations":[
+		{"id":0,"areaId":0,"name":"Harrison Brothers"},
+		{"id":1,"areaId":0,"name":"Court House"},
+		{"id":2,"areaId":0,"name":"Voodoo Lounge"},
+		{"id":3,"areaId":0,"name":"BeeZr"},
+		{"id":4,"areaId":0,"name":"Original Road Display"},
+		{"id":5,"areaId":1,"name":"Green Bus Brewing"},
+		{"id":6,"areaId":1,"name":"EarlyWorks"},
+		{"id":7,"areaId":1,"name":"Alabama Constitution Hall Park"},
+		{"id":8,"areaId":1,"name":"Bicentennial Park"},
+		{"id":9,"areaId":1,"name":"Weeden House"},
+		{"id":10,"areaId":2,"name":"Honest Coffee Roasters"},
+		{"id":11,"areaId":2,"name":"Humphrey's"},
+		{"id":12,"areaId":2,"name":"Huntsville Time's Tower"},
+		{"id":13,"areaId":2,"name":"Old Town Beer Exchange"},
+		{"id":14,"areaId":3,"name":"Big Spring"},
+		{"id":15,"areaId":3,"name":"Stair Fountain"},
+		{"id":16,"areaId":3,"name":"Japanese Friendship Bridge"},
+		{"id":17,"areaId":3,"name":"Gazebo "},
+		{"id":18,"areaId":3,"name":"Museum of Art"},
+		{"id":19,"areaId":3,"name":"Flame"},
+		{"id":20,"areaId":3,"name":"VBC Fountain"}]
+}

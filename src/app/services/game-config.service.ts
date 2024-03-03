@@ -110,6 +110,9 @@ export class GameConfigService {
       case DefaultConfigOption.Tag:
         path = "assets/game-configurations/tag.json";
         break;
+      case DefaultConfigOption.CityWalk:
+        path = "assets/game-configurations/city-walk.json";
+        break;
       default:
         throw Error("Not a valid default configuration");
     }
