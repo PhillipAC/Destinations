@@ -1,5 +1,12 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 body {
     background-color: black;
+    color: white;
 }
 
 .header-content{
@@ -25,7 +32,7 @@ body {
     border-radius: 10px;
     background-color: white;
     width: 200px;
-    /*height: 60px;*/
+    color: black;
 }
 
 .wake{
@@ -89,7 +96,7 @@ body {
     justify-content: center;
 }
 
-.area{
+.area-editor{
     grid-column: 1 / 4;
     display: grid;
     grid-template-columns: 50% 50%;
@@ -104,12 +111,15 @@ body {
     }
 
     .locations{
+        display: grid;
+        grid-template-columns: 75px auto 25px;
         border: 1px white solid;
         padding: 5px;
         
         .location{
+            grid-column: 1/4;
             display: grid;
-            grid-template-columns: 80px auto 25px;
+            grid-template-columns: auto 25px;
         }    
     }
 
@@ -125,20 +135,35 @@ body {
     }
 }
 
-.remove-button{
-    color: white;
-    background-color: red;
-}
-
-.add-button{
-    color: white;
-    background-color: rgb(14, 14, 206);
-}
-
 .btn{
     padding: 5px;
-    color: white;
-    border: solid white 1px;
+    border: black solid 1px;
+    color: black;
+    background-color: white;
     cursor: pointer;
     text-decoration: none;
+    display: inline-block;
+
+    &.btn-add{
+        background-color: rgb(14,14,206);
+        color: white;
+    }
+
+    &.btn-remove{
+        background-color: red;
+        color: white;
+    }
+}
+
+input[type="text"] {
+    border: black 1px solid;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.label{
+    font-style: bold;
+    padding: 5px;
 }

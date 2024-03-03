@@ -70,7 +70,7 @@ export class EditorService {
   public addAdjacentArea(areaId: number, adjacentAreaId: number): void{
     let area = ArrayHelper.selectById(this.areas, areaId);
     let exists = area?.adjacentAreas.find(a => a == adjacentAreaId) != undefined;
-    if(area != null && !exists){
+    if(area != null && !exists && area.id != areaId){
       area.adjacentAreas.push(adjacentAreaId);
     }
   }

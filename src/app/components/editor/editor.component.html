@@ -15,26 +15,28 @@
     <div class="label">End: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.endNomenclature"/>
     <div></div>
-    <div class="label">Areas</div>
+    <div class="label">Areas:</div>
     <div></div>
-    <button class="add-button" (click)="newArea()">+</button>
-    <div *ngFor="let area of areas; index as i" class="area">
+    <button class="btn btn-add" (click)="newArea()">+</button>
+    <div *ngFor="let area of areas; index as i" class="area-editor">
         <div class="header">
             <div class="label">Name: </div>
             <input type="text" [(ngModel)]="area.name"/>
-            <button class="remove-button" (click)="removeArea(area.id)">X</button>
+            <button class="btn btn-remove" (click)="removeArea(area.id)">X</button>
         </div>
         <div class="locations">
+            <div class="label">Location:</div>
+            <span></span>
+            <button class="btn btn-add" (click)="newLocation(area.id)">+</button>
             <div *ngFor="let location of area.locations; index as j"
                 class="location">
-                <div class="label">Location: </div>
                 <input type="text" [(ngModel)]="location.name"/>
-                <button class="remove-button" (click)="removeLocation(location.id)">X</button>
+                <button class="btn btn-remove" (click)="removeLocation(location.id)">X</button>
             </div>
-            <button class="add-button" (click)="newLocation(area.id)">New Location</button>
         </div>
         <div class="adjacent-areas">
-            <div *ngFor="let adjacentArea of areas; index as j" class="adjacent-area">
+            <div class="label">Adjacent Areas:</div>
+            <div *ngFor="let adjacentArea of adjacentAreaOptions(area.id); index as j" class="adjacent-area">
                 <input type="checkbox" [checked]="arrayHelper.containsElement(area.adjacentAreas, adjacentArea.id)"
                     (click)="handleAdjacentAreaToggle($event, area.id, adjacentArea.id)"/>
                 <div>{{adjacentArea.name}}</div>
@@ -42,9 +44,11 @@
         </div>
     </div>
 </div>
-<button (click)="save()">Save</button>
-<button (click)="saveAndDownload()">Save & Download</button>
+<button (click)="save()" class="btn">Save</button>
+<button (click)="saveAndDownload()" class="btn">Save & Download</button>
 <br>
-<input type='file' (change)="fileChanged($event)" style="background-color: white;">
-<button [disabled]="!hasFile()" (click)="uploadConfig()">Load Config</button>
+<label class="custom-file-upload" class="btn">
+    <input type="file" (change)="fileChanged($event)"/>
+    Load Config
+</label>
 <a [routerLink]="['']" class="btn">Back</a>

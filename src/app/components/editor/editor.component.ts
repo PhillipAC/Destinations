@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AreaEditor } from '../../models/editor/area-editor';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { BaseId } from '../../models/base/base-id';
 import { LocationEditor } from '../../models/editor/location-editor';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { OptionsComponent } from '../options/options.component';
   standalone: true,
   imports: [
     NgFor,
+    NgIf,
     RouterLink,
     OptionsComponent,
     FormsModule
@@ -98,10 +99,7 @@ export class EditorComponent implements OnInit{
 
   //Fired when the file selected changes
   public fileChanged($event: any): void {
-    this._file = $event.target.files[0]
-  }
-
-  public uploadConfig(): void{
+    this._file = $event.target.files[0];
     let fileReader: FileReader = new FileReader();
     fileReader.onload = (e) => {
       let sJson: any = fileReader.result;
@@ -110,5 +108,10 @@ export class EditorComponent implements OnInit{
         this.save();
     }
     fileReader.readAsText(this._file);
+  }
+
+  //Returns all areas that do not contain the given id
+  public adjacentAreaOptions(id: number): AreaEditor[]{
+    return this._editorService.areas.filter(a => a.id != id);
   }
 }
