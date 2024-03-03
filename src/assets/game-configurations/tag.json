@@ -6,6 +6,7 @@
         "startNomenclature": "Begin",
         "stepNomenclature": "Mission",
         "endNomenclature": "End",
+        "stepCount":3,
         "isCycle": "true"
     },
     "areas": [

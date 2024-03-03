@@ -6,6 +6,7 @@
         "startNomenclature": "Wake Up",
         "stepNomenclature": "Collect",
         "endNomenclature": "Escape",
+        "stepCount": 1,
         "isCycle": false
     },
     "areas": [

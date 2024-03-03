@@ -19,6 +19,5 @@
         <div class="bottom room" id="escape-room">{{route.finalDestination.location}}</div>
     </div>
 </div>
-<label style="color: white">Middle Destination Count: </label><input type="number" min="0" max="7" [(ngModel)]="midDestinations"/><br>
 <a (click)="generateRound()" class="btn">Regenerate</a><br>
 <a [routerLink]="['']" class="btn">Back</a>

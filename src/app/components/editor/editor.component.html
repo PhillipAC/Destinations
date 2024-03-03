@@ -15,6 +15,9 @@
     <div class="label">End: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.endNomenclature"/>
     <div></div>
+    <div class="label">Steps: </div>
+    <input class="input-field" type="number" min="0" [(ngModel)]="gameInfo.stepCount"/>
+    <div></div>
     <input type="checkbox" [checked]="gameInfo.isCycle"
     (change)="gameInfo.isCycle= !gameInfo.isCycle"/>
     <div class="label">Cycle Generation</div>

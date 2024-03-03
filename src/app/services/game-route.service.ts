@@ -35,7 +35,7 @@ export class GameRouteService {
       let areas: Area[] = [];
 
       //Determine the sequence of Areas to move between
-      for(var i = 0; i < steps+2; i++){
+      for(var i = 0; i < this._gameConfigService.getStepCount+2; i++){
         //If there are no areas to select from reset the list of areas
         if(areas.length == 0){
           //Create a copy of the areas so we can manipulate it without editing the source

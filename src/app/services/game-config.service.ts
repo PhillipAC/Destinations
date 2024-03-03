@@ -22,6 +22,7 @@ export class GameConfigService {
   
   private _config: GameConfig | null = null;
   
+  //Returns all info about the game
   public get getGameInfo(): GameInfo{
     if(this._config == null){
       return new GameInfo();
@@ -67,6 +68,14 @@ export class GameConfigService {
       return false;
     }
     return this._config.gameInfo.isCycle;
+  }
+
+  //Returns the number of step counts
+  public get getStepCount(): number{
+    if(this._config == null || this._config.gameInfo.stepCount < 0){
+      return 0;
+    }
+    return this._config.gameInfo.stepCount;
   }
 
   //Returns the tag of the configuration

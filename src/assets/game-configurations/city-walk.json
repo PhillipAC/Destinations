@@ -5,6 +5,7 @@
 		"startNomenclature":"Start",
 		"stepNomenclature":"Stop",
 		"endNomenclature":"Finish",
+		"stepCount":2,
 		"isCycle":true},
 	"version":0,
 	"areas":[

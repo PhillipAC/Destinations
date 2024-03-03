@@ -4,6 +4,7 @@ export class GameInfo {
     public endNomenclature: string = "";
     public stepNomenclature: string = "";
     public gameTag: string = "";
+    public stepCount: number = 1;
     public isCycle: boolean = false;
 
     constructor(){
@@ -12,6 +13,7 @@ export class GameInfo {
         this.startNomenclature = "Start";
         this.stepNomenclature = "Destination";
         this.endNomenclature = "Finish";
+        this.stepCount = 1;
         this.isCycle = false;
     }
 }
