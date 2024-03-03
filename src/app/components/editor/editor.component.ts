@@ -8,12 +8,16 @@ import { GameConfigService } from '../../services/game-config.service';
 import { EditorService } from '../../services/editor.service';
 import { ArrayHelper } from '../../helpers/array-helper';
 import { GameInfo } from '../../models/game-info';
+import { RouterLink } from '@angular/router';
+import { OptionsComponent } from '../options/options.component';
 
 @Component({
   selector: 'app-editor',
   standalone: true,
   imports: [
     NgFor,
+    RouterLink,
+    OptionsComponent,
     FormsModule
   ],
   templateUrl: './editor.component.html',
@@ -38,11 +42,14 @@ export class EditorComponent implements OnInit{
   }
 
   //Loads services need for component
-  constructor(private _editorService: EditorService){}
+  constructor(private _editorService: EditorService,
+              private _gameConfigService: GameConfigService){}
 
   //Requests that the current config is loaded
   public ngOnInit(): void {
     this._editorService.loadConfigFromService().subscribe();
+    this._gameConfigService.configLoaded$.subscribe(_ => 
+      this._editorService.loadConfigFromService().subscribe())
   }
 
   //Returns if a file has been selected

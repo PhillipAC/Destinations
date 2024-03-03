@@ -1,3 +1,4 @@
+<app-options></app-options>
 <div class="editor" style="border-color: white; border-style: solid; color: white">
     <div class="label">Game: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.name"/>
@@ -46,3 +47,4 @@
 <br>
 <input type='file' (change)="fileChanged($event)" style="background-color: white;">
 <button [disabled]="!hasFile()" (click)="uploadConfig()">Load Config</button>
+<a [routerLink]="['']" class="btn">Back</a>

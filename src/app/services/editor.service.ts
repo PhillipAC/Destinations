@@ -5,6 +5,7 @@ import { LocationEditor } from '../models/editor/location-editor';
 import { Observable, map, of } from 'rxjs';
 import { ArrayHelper } from '../helpers/array-helper';
 import { GameInfo } from '../models/game-info';
+import { DefaultConfigOption } from '../enumerations/default-config-option';
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +25,17 @@ export class EditorService {
   //Async: Loads a configuration based on the currently loaded service.
   //Returns an AreaEditor based on service 
   public loadConfigFromService(): Observable<AreaEditor[]>{
-    if(this._configService.isLoaded){
+    if(!this._configService.isLoaded){
+      return this._configService.loadDefault(DefaultConfigOption.Stalker)
+        .pipe<AreaEditor[]>(map(_ => {
+          this.loadEditorService();
+          return this.areas;
+        }));
+    }
+    else{
       this.loadEditorService();
       return of(this.areas);
     }
-    return this._configService.configLoaded$.pipe<AreaEditor[]>(map(_ => 
-      {
-        this.loadEditorService();
-        return this.areas;
-      }));
   }
 
   //Adds a new Area
