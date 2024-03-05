@@ -3,10 +3,10 @@ import { GameConfig } from '../models/configurations/game-config';
 import { Area } from '../models/area';
 import { GameRoute } from '../models/game-route';
 import { Location } from '../models/location';
-import { AdjacentArea } from '../models/adjacent-area';
 import { GameConfigService } from './game-config.service';
 import { Subject } from 'rxjs';
 import { Destination } from '../models/destination';
+import { PrngService } from './prng.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,12 @@ export class GameRouteService {
   //Published any time a new route is generated
   public newRouteCreated$ = this.newRouteCreatedObserver.asObservable();
 
-  constructor(private _gameConfigService: GameConfigService) { }
+  constructor(private _gameConfigService: GameConfigService,
+      private _prngService: PrngService) { }
 
   // Creates a new route based on the loaded configuration
   // param(steps): the number of destinations between the start and end location
-  public generateRoute(steps: number): GameRoute{
+  public generateRoute(steps: number, seed: string): GameRoute{
     //If no configuration is loaded throw an error
     if(!this._gameConfigService.isLoaded){
       throw new Error("No configuration has been loaded");
@@ -33,6 +34,12 @@ export class GameRouteService {
       let targetAreas: Area[] = [];
       //An array to store non-selected areas
       let areas: Area[] = [];
+
+      //Convert seed to a number
+      let numSeed = Number.parseInt(seed, 16);
+      console.log(numSeed);
+      //Seed the PRNG service
+      this._prngService.reseed(numSeed);
 
       //Determine the sequence of Areas to move between
       for(var i = 0; i < this._gameConfigService.getStepCount+2; i++){
@@ -130,7 +137,7 @@ export class GameRouteService {
   //param(T): The type of elements in the array
   //param(array): The array to choose a random element of
   private selectRandomElement<T>(array: T[]): T{
-    let index = Math.floor(Math.random()*array.length);
+    let index = Math.floor(this._prngService.next()*array.length);
     return array[index];
   }
 }

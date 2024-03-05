@@ -26,6 +26,8 @@ export class GameComponent implements OnInit {
   stepNomenclature: string = "Step";
   endNomenclature: string = "Finish";
   route: GameRoute | undefined;
+  round: number = 0;
+  seed: string = "A3C2F8";
 
   //The amount of middle destinations one has to go between
   public midDestinations: number = 1;
@@ -50,11 +52,13 @@ export class GameComponent implements OnInit {
       this.startNomenclature = this._gameConfigService.getStartNomenclature;
       this.stepNomenclature = this._gameConfigService.getStepNomenclature;
       this.endNomenclature = this._gameConfigService.getEndNomenclature;
-      this._gameRouteService.generateRoute(1);
+      this.generateRound();
   }
 
   //Creates a new route to move between
   public generateRound(): void {
-    this._gameRouteService.generateRoute(this.midDestinations);
+    console.log(this.seed + this.round);
+    this._gameRouteService.generateRoute(this.midDestinations, this.seed + this.round);
+    this.round++;
   }
 }

@@ -19,5 +19,7 @@
         <div class="bottom room" id="escape-room">{{route.finalDestination.location}}</div>
     </div>
 </div>
+<label class="label">Seed: </label><input type="text" class="textbox" [(ngModel)]="seed" maxlength="6" pattern="[0-9a-fA-F]+"><br>
+<label class="label">Next Round: </label><input type="number" [(ngModel)]="round" min="0"><br>
 <a (click)="generateRound()" class="btn">Next Route</a><br>
 <a [routerLink]="['']" class="btn">Back</a>
