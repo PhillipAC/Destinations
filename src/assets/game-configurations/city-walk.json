@@ -6,7 +6,10 @@
 		"stepNomenclature":"Stop",
 		"endNomenclature":"Finish",
 		"stepCount":2,
-		"isCycle":true},
+		"isCycle":true,
+		"startUseSeed":true,
+		"endUseSeed":true,
+		"stepUseSeed":true},
 	"version":0,
 	"areas":[
 		{"id":0,"name":"Downtown Square"},

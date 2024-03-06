@@ -1,19 +1,15 @@
 export class GameInfo {
-    public name: string = "";
-    public startNomenclature: string = "";
-    public endNomenclature: string = "";
-    public stepNomenclature: string = "";
-    public gameTag: string = "";
-    public stepCount: number = 1;
-    public isCycle: boolean = false;
 
-    constructor(){
-        this.name = "New Game";
-        this.gameTag = "Tag for the game";
-        this.startNomenclature = "Start";
-        this.stepNomenclature = "Destination";
-        this.endNomenclature = "Finish";
-        this.stepCount = 1;
-        this.isCycle = false;
-    }
+    constructor(
+        public name: string = "New Game",
+        public gameTag: string = "Tag for the game",
+        public startNomenclature: string = "Start",
+        public stepNomenclature: string = "Destination",
+        public endNomenclature: string = "Finish",
+        public stepCount: number = 1,
+        public isCycle: boolean = false,
+        public startUseSeed: boolean = false,
+        public endUseSeed: boolean = false,
+        public stepUseSeed: boolean = false
+    ){}
 }

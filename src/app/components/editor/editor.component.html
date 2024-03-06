@@ -10,21 +10,33 @@
     <div class="label">Tag: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.gameTag"/>
     <div></div>
-    <div class="label">Start: </div>
+    <div class="label">Starting Location: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.startNomenclature"/>
     <div></div>
-    <div class="label">Steps: </div>
+    <div class="label">Middle Destinations: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.stepNomenclature"/>
     <div></div>
-    <div class="label">End: </div>
+    <div class="label">Final Destination: </div>
     <input class="input-field" type="text" [(ngModel)]="gameInfo.endNomenclature"/>
     <div></div>
     <div class="label">Steps: </div>
     <input class="input-field" type="number" min="0" [(ngModel)]="gameInfo.stepCount"/>
     <div></div>
     <input type="checkbox" [checked]="gameInfo.isCycle"
-    (change)="gameInfo.isCycle= !gameInfo.isCycle"/>
-    <div class="label">Cycle Route</div>
+    (change)="gameInfo.isCycle = !gameInfo.isCycle"/>
+    <div class="label">Cycle Route (Start and End will be the same)</div>
+    <div></div>
+    <input type="checkbox" [checked]="gameInfo.startUseSeed"
+    (change)="gameInfo.startUseSeed = !gameInfo.startUseSeed"/>
+    <div class="label">Use seed for start location</div>
+    <div></div>
+    <input type="checkbox" [checked]="gameInfo.stepUseSeed"
+    (change)="gameInfo.stepUseSeed = !gameInfo.stepUseSeed"/>
+    <div class="label">Use seed for middle destinations</div>
+    <div></div>
+    <input type="checkbox" [checked]="gameInfo.endUseSeed"
+    (change)="gameInfo.endUseSeed= !gameInfo.endUseSeed"/>
+    <div class="label">Use seed for final destination</div>
     <div></div>
     <div class="label">Areas:</div>
     <div></div>

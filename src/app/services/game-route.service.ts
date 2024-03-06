@@ -41,8 +41,11 @@ export class GameRouteService {
       //Seed the PRNG service
       this._prngService.reseed(numSeed);
 
+      //Check how many steps to generate
+      let steps: number = this._gameConfigService.getStepCount+2;
+
       //Determine the sequence of Areas to move between
-      for(var i = 0; i < this._gameConfigService.getStepCount+2; i++){
+      for(var i = 0; i < steps; i++){
         //If there are no areas to select from reset the list of areas
         if(areas.length == 0){
           //Create a copy of the areas so we can manipulate it without editing the source
@@ -78,7 +81,16 @@ export class GameRouteService {
             }
           }
           //Select a random area from the optional areas
-          let targetArea: Area = this.selectRandomElement<Area>(optionalAreas);
+          //If this is the first time check if we are using the start seed
+          //else if this is the last time check if we are using the end seed
+          //else check if we are using the step seed
+          let useSeed: boolean = i == 0 ? 
+            this._gameConfigService.getGameInfo.startUseSeed :
+              i ==  steps - 1 ?
+                this._gameConfigService.getGameInfo.endUseSeed :
+                this._gameConfigService.getGameInfo.stepUseSeed;
+          console.log(useSeed);
+          let targetArea: Area = this.selectRandomElement<Area>(optionalAreas, useSeed);
           //Remove the selected area from the list of future available areas
           areas = areas.filter(a => a.id != targetArea.id);
           //Add the area to the areas to visit
@@ -101,7 +113,12 @@ export class GameRouteService {
           location = firstLocation;
         }
         else{
-          location = this.selectRandomElement<Location>(optionalLocations);
+          let useSeed: boolean = i == 0 ? 
+            this._gameConfigService.getGameInfo.startUseSeed :
+              i == steps - 1 ?
+                this._gameConfigService.getGameInfo.endUseSeed :
+                this._gameConfigService.getGameInfo.stepUseSeed;
+          location = this.selectRandomElement<Location>(optionalLocations, useSeed);
           //Store info about the location if it is the first round
           if(i == 0){
             firstLocation = location;
@@ -136,8 +153,12 @@ export class GameRouteService {
   //Selects a random element from an array
   //param(T): The type of elements in the array
   //param(array): The array to choose a random element of
-  private selectRandomElement<T>(array: T[]): T{
-    let index = Math.floor(this._prngService.next()*array.length);
+  private selectRandomElement<T>(array: T[], useSeed: boolean): T{
+    let index: number;
+    if(useSeed)
+      index = Math.floor(this._prngService.next()*array.length);
+    else
+      index = Math.floor(Math.random()*array.length);
     return array[index];
   }
 }

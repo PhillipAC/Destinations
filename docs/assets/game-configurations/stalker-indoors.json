@@ -7,7 +7,10 @@
         "stepNomenclature": "Collect",
         "endNomenclature": "Escape",
         "stepCount": 1,
-        "isCycle": false
+        "isCycle": false,
+		"startUseSeed":false,
+		"endUseSeed":false,
+		"stepUseSeed":false
     },
     "areas": [
         {
