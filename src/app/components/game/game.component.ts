@@ -36,6 +36,7 @@ export class GameComponent implements OnInit {
     private _gameRouteService: GameRouteService){}
 
   ngOnInit(){
+    this.seed = this.generateRandomSeed(8);
     this._gameRouteService.newRouteCreated$.subscribe((route) => this.route = route);
     if(!this._gameConfigService.isLoaded){
       this._gameConfigService.loadDefault(DefaultConfigOption.Stalker)
@@ -60,5 +61,9 @@ export class GameComponent implements OnInit {
     console.log(this.seed + this.round);
     this._gameRouteService.generateRoute(this.midDestinations, this.seed + this.round);
     this.round++;
+  }
+
+  private generateRandomSeed(length: number): string {
+    return Math.floor(Math.random()*(Math.pow(16, length))).toString(16).padStart(length, '0');
   }
 }
