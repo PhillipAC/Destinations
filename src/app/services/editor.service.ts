@@ -70,7 +70,7 @@ export class EditorService {
   public addAdjacentArea(areaId: number, adjacentAreaId: number): void{
     let area = ArrayHelper.selectById(this.areas, areaId);
     let exists = area?.adjacentAreas.find(a => a == adjacentAreaId) != undefined;
-    if(area != null && !exists && area.id != areaId){
+    if(area != null && !exists){
       area.adjacentAreas.push(adjacentAreaId);
     }
   }
@@ -97,6 +97,10 @@ export class EditorService {
   //Loads a config from a JSON file
   public loadFromJson(sJson: string) {
     this._configService.loadFromJson(sJson);
+  }
+
+  public getJson(): string{
+    return this._configService.getJson();
   }
 
   //Loads the editor service based on the currently loaded config

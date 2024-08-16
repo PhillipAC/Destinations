@@ -113,6 +113,7 @@ export class GameRouteService {
           location = firstLocation;
         }
         else{
+          //Determine if to use the seed
           let useSeed: boolean = i == 0 ? 
             this._gameConfigService.getGameInfo.startUseSeed :
               i == steps - 1 ?

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AreaEditor } from '../../models/editor/area-editor';
 import { NgFor, NgIf } from '@angular/common';
 import { BaseId } from '../../models/base/base-id';
@@ -25,7 +25,10 @@ import { OptionsComponent } from '../options/options.component';
   styleUrl: './editor.component.scss'
 })
 export class EditorComponent implements OnInit{
+
   private _file: any = undefined;
+  
+  public jsonConfig: string | null = null;
 
   //Return the GmaeInfo from the Editor Service
   public get gameInfo(): GameInfo{
@@ -60,9 +63,12 @@ export class EditorComponent implements OnInit{
 
   //Removes or add an adjacent based on the current state of it
   public handleAdjacentAreaToggle(event: Event, areaId: number, adjacentAreaId: number): void{
-    let removed = this._editorService.removeAdjacentArea(areaId, adjacentAreaId);
-    if(!removed){
+    let shouldAdd = (event.target as any).checked as boolean;
+    if(shouldAdd){
       this._editorService.addAdjacentArea(areaId, adjacentAreaId);
+    }
+    else{
+      this._editorService.removeAdjacentArea(areaId, adjacentAreaId);
     }
   }
 
@@ -91,6 +97,11 @@ export class EditorComponent implements OnInit{
     this._editorService.saveToConfig();
   }
 
+  //Gets the JSON version of the configuration
+  public getJSON(){
+    this.jsonConfig = this._editorService.getJson();
+  }
+
   //Saves the current configuration and downloads a file version
   public saveAndDownload(){
     this._editorService.saveToConfig();
@@ -108,6 +119,12 @@ export class EditorComponent implements OnInit{
         this.save();
     }
     fileReader.readAsText(this._file);
+  }
+
+  public loadJSON() 
+  {
+    if(this.jsonConfig != null)
+      this._editorService.loadFromJson(this.jsonConfig);
   }
 
   //Returns all areas that do not contain the given id

@@ -226,4 +226,8 @@ export class GameConfigService {
   public getAdjacentAreasByAreaId(areaId: number): AdjacentArea[] {
     return this.getAdjacentAreas.filter(l => l.areaId == areaId);
   }
+
+  getJson(): string {
+    return JSON.stringify(this._config);
+  }
 }

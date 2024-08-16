@@ -67,11 +67,17 @@
         </div>
     </div>
 </div>
-<button (click)="save()" class="btn">Save</button>
-<button (click)="saveAndDownload()" class="btn">Save & Download</button>
+<button (click)="save()" class="btn">Save Config</button>
+<button (click)="saveAndDownload()" class="btn">Save & Download Config</button>
+<button (click)="getJSON()" class="btn">Get Config JSON</button>
+<br>
+<input type="text" class="input-field" style="width: 100%;" [(ngModel)]="jsonConfig"/>
 <br>
 <label class="custom-file-upload" class="btn">
     <input type="file" (change)="fileChanged($event)"/>
-    Load Config
+    Load Config File
 </label>
+<br>
+<button (click)="loadJSON()" class="btn">Load Config JSON</button>
+<br>
 <a [routerLink]="['']" class="btn">Back</a>
