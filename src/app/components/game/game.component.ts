@@ -39,8 +39,12 @@ export class GameComponent implements OnInit {
     this.seed = this.generateRandomSeed(8);
     this._gameRouteService.newRouteCreated$.subscribe((route) => this.route = route);
     if(!this._gameConfigService.isLoaded){
-      this._gameConfigService.loadDefault(DefaultConfigOption.Stalker)
+      if(!this._gameConfigService.loadSavedConfig())
+      {
+        this._gameConfigService.loadDefault(DefaultConfigOption.Stalker)
         .subscribe(_ => this.loadGameData());
+      }
+      this.loadGameData();
     }
     else{
       this.loadGameData();

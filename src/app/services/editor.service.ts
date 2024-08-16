@@ -26,11 +26,19 @@ export class EditorService {
   //Returns an AreaEditor based on service 
   public loadConfigFromService(): Observable<AreaEditor[]>{
     if(!this._configService.isLoaded){
-      return this._configService.loadDefault(DefaultConfigOption.Stalker)
-        .pipe<AreaEditor[]>(map(_ => {
-          this.loadEditorService();
-          return this.areas;
-        }));
+      if(!this._configService.loadSavedConfig())
+      {
+        return this._configService.loadDefault(DefaultConfigOption.Stalker)
+          .pipe<AreaEditor[]>(map(_ => {
+            this.loadEditorService();
+            return this.areas;
+          }));
+      }
+      else
+      {
+        this.loadEditorService();
+        return of(this.areas);
+      }
     }
     else{
       this.loadEditorService();

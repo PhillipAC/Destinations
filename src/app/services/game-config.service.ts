@@ -17,6 +17,7 @@ import { FileService } from './file.service';
 export class GameConfigService {
   private configLoadedObservable = new Subject<GameConfig>();
   public configLoaded$ = this.configLoadedObservable.asObservable();
+  public ConfigKey: string = "Destinations.Configuration";
 
   private readonly _currentConfigVersion: number = 0;
   
@@ -154,6 +155,7 @@ export class GameConfigService {
       this._config = config;
       this.isLoaded = true;
       this.configLoadedObservable.next(config);
+      localStorage.setItem(this.ConfigKey, sJson);
     }
   }
 
@@ -210,6 +212,7 @@ export class GameConfigService {
     gameConfig.version = version;
 
     this._config = gameConfig;
+    localStorage.setItem(this.ConfigKey, JSON.stringify(this._config));
     console.log(gameConfig);
     this.configLoadedObservable.next(gameConfig);
   }
@@ -227,7 +230,17 @@ export class GameConfigService {
     return this.getAdjacentAreas.filter(l => l.areaId == areaId);
   }
 
-  getJson(): string {
+  public getJson(): string {
     return JSON.stringify(this._config);
+  }
+
+  public loadSavedConfig(): boolean {
+    let rawData = localStorage.getItem(this.ConfigKey);
+    if(rawData != null)
+    {
+      this.loadFromJson(rawData);
+      return true;
+    }
+    return false;
   }
 }
